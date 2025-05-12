@@ -3,12 +3,16 @@ package ph.com.guanzongroup.gtabulate.model;
 import java.sql.SQLException;
 import java.util.Date;
 import org.guanzon.appdriver.agent.services.Model;
+import org.guanzon.appdriver.base.GuanzonException;
 import org.guanzon.appdriver.base.MiscUtil;
 import org.guanzon.appdriver.constant.EditMode;
 import org.guanzon.appdriver.constant.RecordStatus;
 import org.json.simple.JSONObject;
+import ph.com.guanzongroup.gtabulate.model.services.TabulationModels;
 
 public class Model_Contest_Master extends Model {
+    Model_Events poEvents;
+    
     @Override
     public void initialize() {
         try {
@@ -29,7 +33,9 @@ public class Model_Contest_Master extends Model {
             poEntity.absolute(1);
 
             ID = poEntity.getMetaData().getColumnLabel(1);
-
+            
+            poEvents = new TabulationModels(poGRider).Events();
+            
             pnEditMode = EditMode.UNKNOWN;
         } catch (SQLException e) {
             logwrapr.severe(e.getMessage());
@@ -99,5 +105,26 @@ public class Model_Contest_Master extends Model {
 
     public String getRecordStatus() {
         return (String) getValue("cRecdStat");
+    }
+    
+    public Model_Events Events() throws SQLException, GuanzonException{
+        if (!"".equals((String) getValue("sEventIDx"))){
+            if (poEvents.getEditMode() == EditMode.READY && 
+                poEvents.getEventId().equals((String) getValue("sEventIDx")))
+                return poEvents;
+            else{
+                poJSON = poEvents.openRecord((String) getValue("sEventIDx"));
+
+                if ("success".equals((String) poJSON.get("result")))
+                    return poEvents;
+                else {
+                    poEvents.initialize();
+                    return poEvents;
+                }
+            }
+        } else {
+            poEvents.initialize();
+            return poEvents;
+        }
     }
 }
