@@ -1,5 +1,6 @@
 package ph.com.guanzongroup.gtabulate.model;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import org.guanzon.appdriver.agent.services.Model;
 import org.guanzon.appdriver.base.GuanzonException;
@@ -63,12 +64,12 @@ public class Model_Event_Criteria extends Model {
         return (String) getValue("sCriteria");
     }
     
-    public JSONObject setPercentage(double percentage){
+    public JSONObject setPercentage(BigDecimal percentage){
         return setValue("nPercentx", percentage);
     }
 
-    public String getPercentage() {
-        return (String) getValue("nPercentx");
+    public BigDecimal getPercentage() {
+        return (BigDecimal) getValue("nPercentx");
     }
     
     public Model_Contest_Master Contest() throws SQLException, GuanzonException{

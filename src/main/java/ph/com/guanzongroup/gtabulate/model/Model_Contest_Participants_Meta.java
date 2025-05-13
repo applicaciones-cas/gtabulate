@@ -9,7 +9,7 @@ import org.json.simple.JSONObject;
 import ph.com.guanzongroup.gtabulate.model.services.TabulationModels;
 
 public class Model_Contest_Participants_Meta extends Model {
-    Model_Contest_Participants_Meta poMeta;
+    Model_Contest_Meta poMeta;
     
     @Override
     public void initialize() {
@@ -27,9 +27,9 @@ public class Model_Contest_Participants_Meta extends Model {
             poEntity.absolute(1);
 
             ID = "sGroupIDx";
-            ID2 = poEntity.getMetaData().getColumnLabel(1);
+            ID2 = "sMetaIDxx";
             
-            poMeta = new TabulationModels(poGRider).ParticipantsMeta();
+            poMeta = new TabulationModels(poGRider).Meta();
             
             pnEditMode = EditMode.UNKNOWN;
         } catch (SQLException e) {
@@ -62,7 +62,7 @@ public class Model_Contest_Participants_Meta extends Model {
         return (String) getValue("sValuexxx");
     }
             
-    public Model_Contest_Participants_Meta Meta() throws SQLException, GuanzonException{
+    public Model_Contest_Meta Meta() throws SQLException, GuanzonException{
         if (!"".equals((String) getValue("sMetaIDxx"))){
             if (poMeta.getEditMode() == EditMode.READY && 
                 poMeta.getMetaId().equals((String) getValue("sMetaIDxx")))
