@@ -1,6 +1,7 @@
 package ph.com.guanzongroup.gtabulate.model;
 
 import java.sql.SQLException;
+import java.util.Date;
 import org.guanzon.appdriver.agent.services.Model;
 import org.guanzon.appdriver.base.GuanzonException;
 import org.guanzon.appdriver.base.MiscUtil;
@@ -27,7 +28,7 @@ public class Model_Event_Tabulation extends Model {
             poEntity.absolute(1);
 
             ID = "sGroupIDx";
-            ID2 = "nJudgeNox";
+            ID2 = "sComptrID";
             
             poParticipants = new TabulationModels(poGRider).Participants();
             
@@ -46,14 +47,14 @@ public class Model_Event_Tabulation extends Model {
         return (String) getValue("sGroupIDx");
     }
     
-    public JSONObject setJudgeNo(int judgeNo){
-        return setValue("nJudgeNox", judgeNo);
+    public JSONObject setComputerId(String id){
+        return setValue("sComptrID", id);
     }
 
-    public int getJudgeNo() {
-        return (int) getValue("nJudgeNox");
+    public String getComputerId() {
+        return (String) getValue("sComptrID");
     }
-    
+
     public JSONObject setJudgeName(String name){
         return setValue("sJudgeNme", name);
     }
@@ -66,16 +67,16 @@ public class Model_Event_Tabulation extends Model {
         return setValue("nRatingsx", rate);
     }
 
-    public String getRatings() {
-        return (String) getValue("nRatingsx");
+    public double getRatings() {
+        return (double) getValue("nRatingsx");
     }
     
-    public JSONObject setComputerId(String id){
-        return setValue("sComptrID", id);
+    public JSONObject setModifiedDate(Date modifiedDate){
+        return setValue("dModified", modifiedDate);
     }
-
-    public String getComputerId() {
-        return (String) getValue("sComptrID");
+    
+    public Date getModifiedDate(){
+        return (Date) getValue("dModified");
     }
     
     public Model_Contest_Participants Participants() throws SQLException, GuanzonException{
@@ -97,5 +98,10 @@ public class Model_Event_Tabulation extends Model {
             poParticipants.initialize();
             return poParticipants;
         }
+    }
+    
+    @Override
+    public String getNextCode(){
+        return "";
     }
 }

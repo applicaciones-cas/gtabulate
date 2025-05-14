@@ -1,5 +1,6 @@
 package ph.com.guanzongroup.gtabulate.model;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import org.guanzon.appdriver.agent.services.Model;
 import org.guanzon.appdriver.base.GuanzonException;
@@ -27,7 +28,7 @@ public class Model_Event_Tabulation_Detail extends Model {
             poEntity.absolute(1);
 
             ID = "sGroupIDx";
-            ID2 = "nJudgeNox";
+            ID2 = "sComptrID";
             ID3 = "nEntryNox";
             
             poParticipants = new TabulationModels(poGRider).Participants();
@@ -47,12 +48,12 @@ public class Model_Event_Tabulation_Detail extends Model {
         return (String) getValue("sGroupIDx");
     }
     
-    public JSONObject setJudgeNo(int judgeNo){
-        return setValue("nJudgeNox", judgeNo);
+    public JSONObject setComputerId(String id){
+        return setValue("sComptrID", id);
     }
 
-    public int getJudgeNo() {
-        return (int) getValue("nJudgeNox");
+    public String getComputerId() {
+        return (String) getValue("sComptrID");
     }
     
     public JSONObject setEntryNo(int entryNo){
@@ -63,20 +64,12 @@ public class Model_Event_Tabulation_Detail extends Model {
         return (int) getValue("nEntryNox");
     }
     
-    public JSONObject setRate(int rate){
+    public JSONObject setRate(double rate){
         return setValue("nPercentx", rate);
     }
 
-    public int getRate() {
-        return (int) getValue("nPercentx");
-    }
-        
-    public JSONObject setComputerId(String id){
-        return setValue("sComptrID", id);
-    }
-
-    public String getComputerId() {
-        return (String) getValue("sComptrID");
+    public double getRate() {
+        return Double.parseDouble(String.valueOf(getValue("nPercentx")));
     }
     
     public Model_Contest_Participants Participants() throws SQLException, GuanzonException{
@@ -98,5 +91,10 @@ public class Model_Event_Tabulation_Detail extends Model {
             poParticipants.initialize();
             return poParticipants;
         }
+    }
+    
+    @Override
+    public String getNextCode(){
+        return "";
     }
 }

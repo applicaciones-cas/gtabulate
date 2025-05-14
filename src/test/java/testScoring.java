@@ -1,3 +1,4 @@
+import java.awt.Polygon;
 import java.sql.SQLException;
 import org.guanzon.appdriver.agent.services.Model;
 import org.guanzon.appdriver.base.GRiderCAS;
@@ -36,10 +37,11 @@ public class testScoring {
         instance = MiscUtil.Connect();
         
         trans = new TabulationControllers(instance, null).Scoring();
+        trans.setVerifyEntryNo(false);
     }
 
     @Test
-    public void testNewTransaction() {        
+    public void test01LoadParticipants() {        
         JSONObject loJSON;
         
         try {
@@ -48,6 +50,8 @@ public class testScoring {
             
             //pass the contest id
             trans.setContestId("00001");
+            //pass the judge name
+            trans.setJudgeName("Michael Cuison");
             
             loJSON = trans.initTransaction();
             
@@ -123,8 +127,175 @@ public class testScoring {
             System.err.println(MiscUtil.getException(e));
             Assert.fail();
         }
-    }   
+    }
     
+    @Test
+    public void test02SetRating() {
+        JSONObject loJSON;
+        
+        try {            
+            loJSON = trans.openTransaction("00012", instance.getTerminalNo());
+            
+            if (!"success".equals((String) loJSON.get("result"))){
+                System.err.println((String) loJSON.get("message"));
+                Assert.fail();
+            }
+                        
+            //set detail scores
+            trans.getDetail(1).setRate(95.00);        
+            System.out.println("Set score to: " + String.valueOf(trans.getDetail(1).getRate()));
+            
+            loJSON = trans.saveTransaction();
+            if (!"success".equals((String) loJSON.get("result"))){
+                System.err.println((String) loJSON.get("message"));
+                Assert.fail();
+            }
+            
+        } catch (CloneNotSupportedException | SQLException | ExceptionInInitializerError | GuanzonException e) {
+            System.err.println(MiscUtil.getException(e));
+            Assert.fail();
+        }
+    }
+    
+    @Test
+    public void test03SetRating() {
+        JSONObject loJSON;
+        
+        try {            
+            loJSON = trans.openTransaction("00012", instance.getTerminalNo());
+            
+            if (!"success".equals((String) loJSON.get("result"))){
+                System.err.println((String) loJSON.get("message"));
+                Assert.fail();
+            }
+                        
+            //set detail scores
+            trans.getDetail(2).setRate(90.00);        
+            System.out.println("Set score to: " + String.valueOf(trans.getDetail(2).getRate()));
+            
+            loJSON = trans.saveTransaction();
+            if (!"success".equals((String) loJSON.get("result"))){
+                System.err.println((String) loJSON.get("message"));
+                Assert.fail();
+            }
+            
+        } catch (CloneNotSupportedException | SQLException | ExceptionInInitializerError | GuanzonException e) {
+            System.err.println(MiscUtil.getException(e));
+            Assert.fail();
+        }
+    }
+    
+    @Test
+    public void test04SetRating() {
+        JSONObject loJSON;
+        
+        try {            
+            loJSON = trans.openTransaction("00012", instance.getTerminalNo());
+            
+            if (!"success".equals((String) loJSON.get("result"))){
+                System.err.println((String) loJSON.get("message"));
+                Assert.fail();
+            }
+                        
+            //set detail scores
+            trans.getDetail(3).setRate(85.00);        
+            System.out.println("Set score to: " + String.valueOf(trans.getDetail(3).getRate()));
+            
+            loJSON = trans.saveTransaction();
+            if (!"success".equals((String) loJSON.get("result"))){
+                System.err.println((String) loJSON.get("message"));
+                Assert.fail();
+            }
+            
+        } catch (CloneNotSupportedException | SQLException | ExceptionInInitializerError | GuanzonException e) {
+            System.err.println(MiscUtil.getException(e));
+            Assert.fail();
+        }
+    }
+    
+    @Test
+    public void test05SetRating() {
+        JSONObject loJSON;
+        
+        try {            
+            loJSON = trans.openTransaction("00012", instance.getTerminalNo());
+            
+            if (!"success".equals((String) loJSON.get("result"))){
+                System.err.println((String) loJSON.get("message"));
+                Assert.fail();
+            }
+                        
+            //set detail scores
+            trans.getDetail(4).setRate(70.00);        
+            System.out.println("Set score to: " + String.valueOf(trans.getDetail(4).getRate()));
+            
+            loJSON = trans.saveTransaction();
+            if (!"success".equals((String) loJSON.get("result"))){
+                System.err.println((String) loJSON.get("message"));
+                Assert.fail();
+            }
+            
+        } catch (CloneNotSupportedException | SQLException | ExceptionInInitializerError | GuanzonException e) {
+            System.err.println(MiscUtil.getException(e));
+            Assert.fail();
+        }
+    }
+    
+    @Test
+    public void test06SetRating() {
+        JSONObject loJSON;
+        
+        try {            
+            loJSON = trans.openTransaction("00012", instance.getTerminalNo());
+            
+            if (!"success".equals((String) loJSON.get("result"))){
+                System.err.println((String) loJSON.get("message"));
+                Assert.fail();
+            }
+                        
+            //set detail scores
+            trans.getDetail(5).setRate(75.00);        
+            System.out.println("Set score to: " + String.valueOf(trans.getDetail(5).getRate()));
+            
+            loJSON = trans.saveTransaction();
+            if (!"success".equals((String) loJSON.get("result"))){
+                System.err.println((String) loJSON.get("message"));
+                Assert.fail();
+            }
+            
+        } catch (CloneNotSupportedException | SQLException | ExceptionInInitializerError | GuanzonException e) {
+            System.err.println(MiscUtil.getException(e));
+            Assert.fail();
+        }
+    }
+    
+    @Test
+    public void test07SetRating() {
+        JSONObject loJSON;
+        
+        try {            
+            loJSON = trans.openTransaction("00012", instance.getTerminalNo());
+            
+            if (!"success".equals((String) loJSON.get("result"))){
+                System.err.println((String) loJSON.get("message"));
+                Assert.fail();
+            }
+                        
+            //set detail scores
+            trans.getDetail(6).setRate(100.00);        
+            System.out.println("Set score to: " + String.valueOf(trans.getDetail(5).getRate()));
+            
+            loJSON = trans.saveTransaction();
+            if (!"success".equals((String) loJSON.get("result"))){
+                System.err.println((String) loJSON.get("message"));
+                Assert.fail();
+            }
+            
+        } catch (CloneNotSupportedException | SQLException | ExceptionInInitializerError | GuanzonException e) {
+            System.err.println(MiscUtil.getException(e));
+            Assert.fail();
+        }
+    }
     
     @AfterClass
     public static void tearDownClass() {
