@@ -1,6 +1,9 @@
 package ph.com.guanzongroup.gtabulate.model.services;
 
 import org.guanzon.appdriver.base.GRiderCAS;
+import ph.com.guanzongroup.gtabulate.model.Model_Bingo_Detail;
+import ph.com.guanzongroup.gtabulate.model.Model_Bingo_Master;
+import ph.com.guanzongroup.gtabulate.model.Model_Bingo_Pattern;
 import ph.com.guanzongroup.gtabulate.model.Model_Contest_Master;
 import ph.com.guanzongroup.gtabulate.model.Model_Contest_Meta;
 import ph.com.guanzongroup.gtabulate.model.Model_Contest_Participants;
@@ -187,6 +190,57 @@ public class TabulationModels {
         return poTabulationDetil;
     }
     
+    public Model_Bingo_Pattern BingoPattern(){
+        if (poGRider == null){
+            System.err.println("ParamTabulate.BingoPattern: Application driver is not set.");
+            return null;
+        }
+        
+        if (poBingoPattern == null){
+            poBingoPattern = new Model_Bingo_Pattern();
+            poBingoPattern.setApplicationDriver(poGRider);
+            poBingoPattern.setXML("Model_Bingo_Patterns");
+            poBingoPattern.setTableName("Bingo_Patterns");
+            poBingoPattern.initialize();
+        }
+
+        return poBingoPattern;
+    }
+    
+    public Model_Bingo_Master BingoMaster(){
+        if (poGRider == null){
+            System.err.println("ParamTabulate.BingoMaster: Application driver is not set.");
+            return null;
+        }
+        
+        if (poBingoMaster == null){
+            poBingoMaster = new Model_Bingo_Master();
+            poBingoMaster.setApplicationDriver(poGRider);
+            poBingoMaster.setXML("Model_Bingo_Master");
+            poBingoMaster.setTableName("Bingo_Master");
+            poBingoMaster.initialize();
+        }
+
+        return poBingoMaster;
+    }
+    
+    public Model_Bingo_Detail BingoDetail(){
+        if (poGRider == null){
+            System.err.println("ParamTabulate.BingoDetail: Application driver is not set.");
+            return null;
+        }
+        
+        if (poBingoDetail == null){
+            poBingoDetail = new Model_Bingo_Detail();
+            poBingoDetail.setApplicationDriver(poGRider);
+            poBingoDetail.setXML("Model_Bingo_Detail");
+            poBingoDetail.setTableName("Bingo_Detail");
+            poBingoDetail.initialize();
+        }
+
+        return poBingoDetail;
+    }
+    
     private final GRiderCAS poGRider;
     
     private Model_Events poEvents;
@@ -199,4 +253,7 @@ public class TabulationModels {
     private Model_Contest_Master poContestMaster;
     private Model_Contest_Participants poParticipants;
     private Model_Contest_Participants_Meta poParticipantsMeta;
+    private Model_Bingo_Pattern poBingoPattern;
+    private Model_Bingo_Master poBingoMaster;
+    private Model_Bingo_Detail poBingoDetail;
 }

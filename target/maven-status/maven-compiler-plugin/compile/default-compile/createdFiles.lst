@@ -4,10 +4,14 @@ ph\com\guanzongroup\gtabulate\model\Model_Contest_Meta.class
 ph\com\guanzongroup\gtabulate\model\Model_Contest_Participants.class
 ph\com\guanzongroup\gtabulate\model\Model_Event_Tabulation.class
 ph\com\guanzongroup\gtabulate\Scoring.class
+ph\com\guanzongroup\gtabulate\BingoPattern.class
 ph\com\guanzongroup\gtabulate\model\services\TabulationModels.class
+ph\com\guanzongroup\gtabulate\model\Model_Bingo_Pattern.class
 ph\com\guanzongroup\gtabulate\model\Model_Contest_Participants_Meta.class
 ph\com\guanzongroup\gtabulate\model\Model_Event_Performing.class
 ph\com\guanzongroup\gtabulate\model\services\TabulationControllers.class
+ph\com\guanzongroup\gtabulate\model\Model_Bingo_Master.class
+ph\com\guanzongroup\gtabulate\model\Model_Bingo_Detail.class
 ph\com\guanzongroup\gtabulate\model\Model_Event_Results.class
 ph\com\guanzongroup\gtabulate\model\Model_Event_Tabulation_Detail.class
 ph\com\guanzongroup\gtabulate\model\Model_Event_Criteria.class

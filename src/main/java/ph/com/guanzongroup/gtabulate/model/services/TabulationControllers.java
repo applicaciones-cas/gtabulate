@@ -1,7 +1,10 @@
 package ph.com.guanzongroup.gtabulate.model.services;
 
+import java.sql.SQLException;
 import org.guanzon.appdriver.base.GRiderCAS;
+import org.guanzon.appdriver.base.GuanzonException;
 import org.guanzon.appdriver.base.LogWrapper;
+import ph.com.guanzongroup.gtabulate.BingoPattern;
 import ph.com.guanzongroup.gtabulate.Scoring;
 
 public class TabulationControllers {
@@ -27,10 +30,28 @@ public class TabulationControllers {
         return poScoring;        
     }
     
+    public BingoPattern BingoPattern() throws SQLException, GuanzonException{
+        if (poGRider == null){
+            poLogWrapper.severe("TabulationControllers.BingoPattern: Application driver is not set.");
+            return null;
+        }
+        
+        if (poPattern != null) return poPattern;
+        
+        poPattern = new BingoPattern();
+        poPattern.setApplicationDriver(poGRider);
+        poPattern.setWithParentClass(false);
+        poPattern.setLogWrapper(poLogWrapper);
+        poPattern.initialize();
+        poPattern.newRecord();
+        return poPattern;        
+    }
+    
     @Override
     protected void finalize() throws Throwable {
         try {
             poScoring = null;
+            poPattern = null;
                     
             poLogWrapper = null;
             poGRider = null;
@@ -43,4 +64,5 @@ public class TabulationControllers {
     private LogWrapper poLogWrapper;
     
     private Scoring poScoring;
+    private BingoPattern poPattern;
 }

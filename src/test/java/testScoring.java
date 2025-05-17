@@ -1,6 +1,4 @@
-import java.awt.Polygon;
 import java.sql.SQLException;
-import org.guanzon.appdriver.agent.services.Model;
 import org.guanzon.appdriver.base.GRiderCAS;
 import org.guanzon.appdriver.base.GuanzonException;
 import org.guanzon.appdriver.base.MiscUtil;
