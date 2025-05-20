@@ -212,7 +212,7 @@ public class Scoring extends Transaction{
         
         if (getEditMode() == EditMode.ADDNEW){
             pdModified = poGRider.getServerDate();
-            poMaster.setValue("sModified", poGRider.Encrypt(poGRider.getUserID()));
+            //poMaster.setValue("sModified", poGRider.Encrypt(poGRider.getUserID()));
         }
         
         
@@ -241,7 +241,7 @@ public class Scoring extends Transaction{
                 }
                 
                 for (int lnCtr = 0; lnCtr <= paDetail.size() -1; lnCtr++){
-                    paDetail.get(lnCtr).setValue("dModified", pdModified);
+                    //paDetail.get(lnCtr).setValue("dModified", pdModified);
                     poJSON = paDetail.get(lnCtr).saveRecord();
                     
                     if ("error".equals((String) poJSON.get("result"))){

@@ -21,7 +21,8 @@ public class Model_Event_Tabulation extends Model {
             poEntity.moveToInsertRow();
 
             MiscUtil.initRowSet(poEntity);
-
+            poEntity.updateObject("nRankxxxx", 0.00);
+           
             poEntity.insertRow();
             poEntity.moveToCurrentRow();
 
@@ -69,6 +70,14 @@ public class Model_Event_Tabulation extends Model {
 
     public double getRatings() {
         return (double) getValue("nRatingsx");
+    }
+    
+    public JSONObject setRank(double rank){
+        return setValue("nRankxxxx", rank);
+    }
+
+    public double getRank() {
+        return (double) getValue("nRankxxxx");
     }
     
     public JSONObject setModifiedDate(Date modifiedDate){
