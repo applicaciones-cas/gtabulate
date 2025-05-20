@@ -51,12 +51,12 @@ public class testBingoPattern {
                 Assert.fail((String) loJSON.get("message"));
             }           
 
-            loJSON = record.getModel().setDescription("Blackout Bingo");
+            loJSON = record.getModel().setDescription("Y Pattern");
             if ("error".equals((String) loJSON.get("result"))) {
                 Assert.fail((String) loJSON.get("message"));
             }     
             
-            loJSON = record.getModel().setImagePath("blackout.jpg");
+            loJSON = record.getModel().setImagePath("YPattern.png");
             if ("error".equals((String) loJSON.get("result"))) {
                 Assert.fail((String) loJSON.get("message"));
             }     
