@@ -2,15 +2,20 @@ package ph.com.guanzongroup.gtabulate;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.guanzon.appdriver.agent.ShowDialogFX;
 import org.guanzon.appdriver.agent.services.Model;
 import org.guanzon.appdriver.agent.services.Transaction;
 import org.guanzon.appdriver.base.GuanzonException;
 import org.guanzon.appdriver.base.MiscUtil;
 import org.guanzon.appdriver.base.SQLUtil;
 import org.guanzon.appdriver.constant.EditMode;
+import org.guanzon.appdriver.constant.RecordStatus;
 import org.json.simple.JSONObject;
 import ph.com.guanzongroup.gtabulate.model.Model_Bingo_Master;
 import ph.com.guanzongroup.gtabulate.model.Model_Bingo_Detail;
+import ph.com.guanzongroup.gtabulate.model.services.TabulationControllers;
 import ph.com.guanzongroup.gtabulate.model.services.TabulationModels;
 
 public class Bingo extends Transaction {
@@ -47,20 +52,21 @@ public class Bingo extends Transaction {
         return loDetail;
     }
 
-    public JSONObject initTransaction() {
+    public JSONObject initTransaction() throws SQLException, GuanzonException {
         SOURCE_CODE = "Bngo";
 
         poMaster = new TabulationModels(poGRider).BingoMaster();
         poDetail = new TabulationModels(poGRider).BingoDetail();
-        poBingoPattern = new BingoPattern();
-
+        poBingoPattern = new TabulationControllers(poGRider, logwrapr).BingoPattern();
+        poBingoPattern.setRecordStatus(RecordStatus.ACTIVE);
+        poBingoPattern.initialize();
+        poBingoPattern.setWithParentClass(true);
         return super.initialize();
     }
 
     public JSONObject openTransaction(String transactiNo) throws CloneNotSupportedException, SQLException, GuanzonException {
 
         poJSON = poMaster.openRecord(transactiNo);
-
         if (!"success".equals((String) poJSON.get("result"))) {
             poJSON = newTransaction();
             if ("success".equals((String) poJSON.get("result"))) {
@@ -68,7 +74,19 @@ public class Bingo extends Transaction {
             }
         }
         poMaster.updateRecord();
-
+        //loadpattern data
+        String lspatternx = poMaster.getValue("sPatternx").toString();
+        if (lspatternx != null && !lspatternx.isEmpty()) {
+            BingoPattern loBingoPattern = new TabulationControllers(poGRider, logwrapr).BingoPattern();
+            loBingoPattern.setWithParentClass(true);
+            loBingoPattern.searchRecord(lspatternx, pbRecordExist);
+            if (!"success".equals((String) poJSON.get("result"))) {
+                poJSON.put("message", "Unable to open transaction detail record.");
+                clear();
+                return poJSON;
+            }
+            poBingoPattern = loBingoPattern;
+        }
         paDetail.clear();
 
         String lsSQL = "SELECT * FROM " + poDetail.getTable()
@@ -178,9 +196,6 @@ public class Bingo extends Transaction {
 
             if (pnEditMode == EditMode.ADDNEW || pnEditMode == EditMode.UPDATE) {
                 poMaster.setValue("dModified", pdModified);
-                if (!poBingoPattern.getModel().getPatternId().isEmpty()) {
-                    poMaster.setValue("sPatternx", poBingoPattern.getModel().getPatternId());
-                }
                 poJSON = poMaster.saveRecord();
 
                 if ("error".equals((String) poJSON.get("result"))) {
@@ -192,7 +207,7 @@ public class Bingo extends Transaction {
 
                 for (int lnCtr = 0; lnCtr <= paDetail.size() - 1; lnCtr++) {
                     paDetail.get(lnCtr).setValue("sTransNox", String.valueOf(poMaster.getValue(1)));
-                    paDetail.get(lnCtr).setValue("nEntryNox", lnCtr);
+                    paDetail.get(lnCtr).setValue("nEntryNox", lnCtr + 1);
                     poJSON = paDetail.get(lnCtr).saveRecord();
 
                     if ("error".equals((String) poJSON.get("result"))) {
@@ -242,6 +257,37 @@ public class Bingo extends Transaction {
         poJSON.put("result", "success");
         poJSON.put("message", "Transaction saved successfully.");
         return poJSON;
+    }
+
+    @Override
+    public JSONObject searchTransaction(String value, boolean byCode) {
+        try {
+            String lsSQL = SQL_BROWSE;
+
+            poJSON = ShowDialogFX.Search(poGRider,
+                    lsSQL,
+                    value,
+                    "Transaction No»nEntryNox»sPatternx",
+                    "sTransNox»nEntryNox»sPatternx",
+                    "sTransNox»nEntryNox»sPatternx",
+                    byCode ? 0 : 1);
+
+            if (poJSON != null) {
+                return openTransaction((String) poJSON.get("sTransNox"));
+
+            } else {
+                poJSON = new JSONObject();
+                poJSON.put("result", "error");
+                poJSON.put("message", "No record loaded.");
+                return poJSON;
+            }
+        } catch (CloneNotSupportedException | SQLException | GuanzonException ex) {
+            Logger.getLogger(Bingo.class.getName()).log(Level.SEVERE, null, ex);
+            poJSON = new JSONObject();
+            poJSON.put("result", "error");
+            poJSON.put("message", "No record loaded.");
+            return poJSON;
+        }
     }
 
 }
