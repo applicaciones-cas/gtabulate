@@ -14,10 +14,12 @@ public class BingoPattern extends Parameter{
     Model_Bingo_Pattern poModel;
     
     @Override
-    public void initialize() {
+    public void initialize() throws SQLException, GuanzonException {
         psRecdStat = Logical.YES;
         
         poModel = new TabulationModels(poGRider).BingoPattern();
+        super.initialize();
+        
     }
     
     @Override

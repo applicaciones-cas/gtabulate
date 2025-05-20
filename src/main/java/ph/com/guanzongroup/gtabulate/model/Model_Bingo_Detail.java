@@ -40,20 +40,20 @@ public class Model_Bingo_Detail extends Model {
         return (String) getValue("sTransNox");
     }
 
-    public JSONObject setEntryNo(String entryNo) {
+    public JSONObject setEntryNo(int entryNo) {
         return setValue("nEntryNox", entryNo);
     }
 
-    public String getEntryNo() {
-        return (String) getValue("nEntryNox");
+    public int getEntryNo() {
+        return (int) getValue("nEntryNox");
     }
     
     public JSONObject setBingoNo(int number) {
         return setValue("nBingoNox", number);
     }
 
-    public String getBingoNo() {
-        return (String) getValue("nBingoNox");
+    public int getBingoNo() {
+        return (int) getValue("nBingoNox");
     }
     
     @Override
