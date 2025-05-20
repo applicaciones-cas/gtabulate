@@ -79,13 +79,18 @@ public class Bingo extends Transaction {
         if (lspatternx != null && !lspatternx.isEmpty()) {
             BingoPattern loBingoPattern = new TabulationControllers(poGRider, logwrapr).BingoPattern();
             loBingoPattern.setWithParentClass(true);
-            loBingoPattern.searchRecord(lspatternx, pbRecordExist);
+            loBingoPattern.searchRecord(lspatternx, true);
             if (!"success".equals((String) poJSON.get("result"))) {
                 poJSON.put("message", "Unable to open transaction detail record.");
                 clear();
                 return poJSON;
             }
             poBingoPattern = loBingoPattern;
+        }else{
+            BingoPattern loBingoPattern = new TabulationControllers(poGRider, logwrapr).BingoPattern();
+            loBingoPattern.setWithParentClass(true);
+            poBingoPattern =loBingoPattern;
+        
         }
         paDetail.clear();
 
@@ -174,8 +179,8 @@ public class Bingo extends Transaction {
             return poJSON;
         }
 
+        pdModified = poGRider.getServerDate();
         if (getEditMode() == EditMode.ADDNEW) {
-            pdModified = poGRider.getServerDate();
             poMaster.setValue("sModified", poGRider.Encrypt(poGRider.getUserID()));
         }
 
