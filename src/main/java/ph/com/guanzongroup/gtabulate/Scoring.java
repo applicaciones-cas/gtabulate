@@ -65,7 +65,7 @@ public class Scoring extends Transaction{
         if(getMaster().getGroupId().isEmpty() ||
             getMaster().getComputerId().isEmpty()) return null;
         
-        if (criteriaNo <= 0 || criteriaNo > paCriteria.size()) return null;
+        if (criteriaNo < 0 || criteriaNo > paCriteria.size()-1) return null;
         
         Model_Event_Tabulation_Detail loDetail;
         
@@ -73,7 +73,7 @@ public class Scoring extends Transaction{
         for (int lnCtr = 0; lnCtr <= paDetail.size() - 1; lnCtr++){
             loDetail = (Model_Event_Tabulation_Detail) paDetail.get(lnCtr);
             
-            if (loDetail.getEntryNo() == criteriaNo) return loDetail;
+            if (loDetail.getEntryNo() == criteriaNo+1) return loDetail;
         }
         
         //no record found, so create a new record for the criteria

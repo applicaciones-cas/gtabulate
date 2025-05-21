@@ -28,7 +28,7 @@ public class TabulationControllers {
         poScoring = new Scoring();
         poScoring.setApplicationDriver(poGRider);
         poScoring.setBranchCode(poGRider.getBranchCode());
-        poScoring.setVerifyEntryNo(true);
+        poScoring.setVerifyEntryNo(false);
         poScoring.setWithParent(false);
         poScoring.setLogWrapper(poLogWrapper);
         return poScoring;
