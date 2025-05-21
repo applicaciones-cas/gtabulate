@@ -80,7 +80,8 @@ public class ComputeScore {
 
                 ResultSet loRSDetail = oApp.executeQuery(lsSQL);
 
-                int lnCtr = 1;
+                int lnCtr = (int) MiscUtil.RecordCount(loRSDetail);
+                
                 oApp.beginTrans("Tabulation", "Computation", "Tbln", "");
                 while(loRSDetail.next()){
                     lsSQL = "UPDATE Event_Tabulation SET nRankxxxx = " + lnCtr +
@@ -88,7 +89,7 @@ public class ComputeScore {
                                 " AND sComptrID = " + SQLUtil.toSQL(loRSDetail.getString("sComptrID"));
                     oApp.executeQuery(lsSQL, "Event_Tabulation", oApp.getBranchCode(), "", "");
 
-                    lnCtr++;
+                    lnCtr--;
                 }
                 oApp.commitTrans();
             }
