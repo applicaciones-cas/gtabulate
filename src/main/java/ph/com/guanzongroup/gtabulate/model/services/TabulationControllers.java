@@ -6,6 +6,7 @@ import org.guanzon.appdriver.base.GuanzonException;
 import org.guanzon.appdriver.base.LogWrapper;
 import ph.com.guanzongroup.gtabulate.Bingo;
 import ph.com.guanzongroup.gtabulate.BingoPattern;
+import ph.com.guanzongroup.gtabulate.ContestMaster;
 import ph.com.guanzongroup.gtabulate.Scoring;
 
 public class TabulationControllers {
@@ -53,6 +54,25 @@ public class TabulationControllers {
         return poPattern;
     }
 
+    public ContestMaster ContestMaster() throws  GuanzonException, SQLException {
+        if (poGRider == null) {
+            poLogWrapper.severe("TabulationControllers.BingoPattern: Application driver is not set.");
+            return null;
+        }
+
+        if (poContestMaster != null) {
+            return poContestMaster;
+        }
+
+        poContestMaster = new ContestMaster();
+        poContestMaster.setApplicationDriver(poGRider);
+        poContestMaster.setWithParentClass(false);
+        poContestMaster.setLogWrapper(poLogWrapper);
+        poContestMaster.initialize();
+        poContestMaster.newRecord();
+        return poContestMaster;
+    }
+
     public Bingo Bingo() {
         if (poGRider == null) {
             poLogWrapper.severe("TabulationControllers.Bingo: Application driver is not set.");
@@ -90,5 +110,6 @@ public class TabulationControllers {
 
     private Scoring poScoring;
     private BingoPattern poPattern;
+    private ContestMaster poContestMaster;
     private Bingo poBingo;
 }
